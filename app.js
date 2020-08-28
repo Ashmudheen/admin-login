@@ -6,7 +6,12 @@ const express = require("express"),
      LocalStrategy = require("passport-local"),
      passportLocalMongoose = require("passport-local-mongoose"),
      session = require("express-session"),
-     methodOverRide = require("method-override");
+     methodOverRide = require("method-override"),
+     admin = require("./admin")
+    
+
+
+
 
 const dburi = process.env.MONGO || "mongodb://localhost/auth_app";
 const sessionSecret = process.env.SESSION_SECRET || "believe in yourself";
@@ -33,6 +38,7 @@ app.use(session({
     
 }));
 
+app.use("/",admin);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(methodOverRide('_method'));
@@ -61,10 +67,12 @@ app.get("/register",(req,res)=>{
 })
 //handling user sign up
 app.post("/register", (req,res)=>{
-    req.body.username
-    req.body.email
-    req.body.password
-    User.register(new User({username: req.body.username}),req.body.password,(err,user)=>{
+     
+     username = req.body.username;
+     password = req.body.password;
+     email = req.body.email;
+    
+    User.register(new User({username: req.body.username, email:req.body.email}),req.body.password,(err,user)=>{
         if(err){ 
             console.log(err);
             return res.render("register");
