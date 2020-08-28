@@ -1,0 +1,26 @@
+<%- include("./partials/header.ejs") %>
+    <div id="content">
+        <div id="login">
+        <div class="form">
+        <h1>Login</h1>
+        <form method="post" action="/login">
+            <input type="text" name="username" placeholder="Username" required="required" />
+            <input type="password" name="password" placeholder="Password" required="required" />
+            <button type="submit" class="btn btn-primary btn-block btn-large"><i class="fas fa-key">Let me in!</i> </button>
+            
+            
+        </form>
+        <a href="/register" style="text-decoration: none;" >
+            <button type="submit" class="btn btn-primary btn-block btn-large;" ><i class="fas fa-key">Sign Up!</i></button></a>
+        
+         </div>
+        </div>
+           
+                   
+           
+    </div>
+    
+    
+  <%- include("./partials/footer.ejs") %>
+
+

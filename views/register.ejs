@@ -1,0 +1,31 @@
+<%- include("./partials/header.ejs") %>
+    <div id="signup">
+        <div class="form">
+        <h1>Sign Up </h1>
+
+
+        <form action="/register" method="POST">
+            <input type="text" name="username" placeholder="username" required>
+            <input type="email" id="email" name="email" placeholder="email" required />
+            <input type="password" name="password" placeholder="password" required>
+            <button type="submit" class="btn btn-primary btn-block btn-large">Sign Up</button>
+        </form>
+        <a href="/login" style="text-decoration: none;" >
+            <button type="submit" class="btn btn-primary btn-block btn-large;" style="margin-bottom: 1rem;" >Login!</button></a>
+        
+        
+    </div>
+        
+            
+                       
+            
+           
+       
+    
+    </div>
+
+    
+    <%- include("./partials/footer.ejs") %>
+
+
+
