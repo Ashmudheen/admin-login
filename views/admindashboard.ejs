@@ -13,7 +13,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <form method="POST" action="/adminlogout" style="display: inline;">
+            <form method="get" action="/adminlogout" style="display: inline;">
                 <button type="submit" class="btn btn-danger float-right mt-3">Log out</button>
             </form>
             <h1 class="text-center mt-3">Welcome Admin</h1>
@@ -46,11 +46,11 @@
                       
                         <td>
                             <form method="POST" action="/adminedit" style="display: inline;">
-                                    <input type="hidden" name="email"  <%- " value=  'user[i].username' " %> >  
+                                    <input type="hidden" name="email"    value=  "<%= user[i].email %>"    >  
                                 <button type="submit" class="btn btn-info">Edit</button>
                             </form>
-                            <form method="POST" action="/deleteuser?_method=DELETE" style="display: inline;">
-                                <input type="hidden" name="email" value="{{this.email}}">
+                            <form method="POST" action="/deleteuser" style="display: inline;">
+                                <input type="hidden" name="email" value=  "<%= user[i].email %>"  >
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </td>

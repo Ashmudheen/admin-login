@@ -1,5 +1,6 @@
 const express = require("express");
 const User = require("./models/user");
+const user = require("./models/user");
 
 var router = express.Router();
 
@@ -54,24 +55,50 @@ router.post("/useredit", (req,res)=>{
 })
 
 router.get("/adminedit",(req,res)=>{
+
+    let username = req.body.username;
+
     res.render("adminedit");
 })
 
 router.post("/adminedit", (req,res)=>{
-    const username = req.body.username;
-    console.log(username);
-    User.find({username:username}).lean().exec((err,data)=>{
+    let email = req.body.email;
+    User.findOne({email:email}).lean().exec((err,data)=>{
         if(data){
-            // res.render("adminedit",{data:data});
-            console.log(data);
+            res.render("adminedit",{data:data});
+          
+        }else{
+            res.redirect("/admindashboard");
         }
     })
 } )
 
-// app.get('/logout', function(req, res) {
-//     req.session.destroy();
-//     res.clearCookie("connect.sid");
-//     res.redirect('/');
-// });
+router.post("/editsave", (req,res)=>{
+    const {username,email}=req.body;
+    user.updateOne({email:email},{$set:{username:username,email:email}},(err)=>{
+        if (err){
+            throw err;
+        }else{
+            res.redirect("\admindashboard");
+        }
+    })
+})
+
+router.post("/deleteuser",(req,res)=>{
+    const email = req.body.email;
+    user.deleteOne({email:email},(err)=>{
+        if (err) {
+            throw err;
+        }else{
+            res.redirect("/admindashboard");
+        }
+    })
+})
+
+router.get('/adminlogout', function(req, res) {
+    req.session.destroy();
+    res.clearCookie("connect.sid");
+    res.redirect('/admin');
+});
 
 module.exports = router;

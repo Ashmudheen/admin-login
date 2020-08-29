@@ -11,20 +11,17 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h3 class="text-center mt-3">Editing {{user.name}}</h1>
-                <form method="POST" action="/usereditsave?_method=PUT">
-                    <% for (var i=0;i<data.length;i++) { %>
-                        <%= data[i].username %>
-                        <%= data[i].email %>
-                        <% } %>
+            <h3 class="text-center mt-3">Editing <%- data.username %></h1>
+                <form method="POST" action="/editsave?_method=PUT">
+                    
                     <div class="form-group">
                         <label for="email">Email <address></address></label>
-                        <input type="email" class="form-control" id="email" name="email" value=
+                        <input type="email" class="form-control" id="email" name="email" value="<%= data.email %>"
                             required>
                     </div>
                     <div class="form-group">
                         <label for="name">User Name</label>
-                        <input type="text" class="form-control" id="username" name="username" value= "" 
+                        <input type="text" class="form-control" id="username" name="username" value= "<%= data.username %>" 
                             required>
                     </div>
                   
