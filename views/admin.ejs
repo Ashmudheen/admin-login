@@ -6,12 +6,12 @@
         <div class="card-body">
           
        
-
+          <%= errors %>
 
    <form action="/admin" method="POST"> 
     <div class="form-group">
       <label for="exampleInputEmail1">User Name</label>
-      <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username" required>
+      <input value="<%= username %>" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username" required>
       <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
     <div class="form-group">
