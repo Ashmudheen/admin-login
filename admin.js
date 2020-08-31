@@ -1,8 +1,11 @@
 const express = require('express');
 const User = require('./models/user');
 const user = require('./models/user');
+const nocache = require("nocache");
 
 var router = express.Router();
+
+router.use(nocache());
 
 router.use(function(req, res, next) {
 	// run for any & all requests
@@ -88,10 +91,12 @@ router.post('/editsave', (req, res) => {
 
 router.post('/deleteuser', (req, res) => {
 	const email = req.body.email;
+	
 	user.deleteOne({ email: email }, (err) => {
 		if (err) {
 			throw err;
 		} else {
+		
 			res.redirect('/admindashboard');
 		}
 	});

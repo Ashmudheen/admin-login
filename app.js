@@ -6,8 +6,10 @@ const express = require('express'),
 	LocalStrategy = require('passport-local'),
 	passportLocalMongoose = require('passport-local-mongoose'),
 	session = require('express-session'),
+	flash = require("connect-flash"),
 	methodOverRide = require('method-override'),
 	admin = require('./admin');
+
 
 const dburi = process.env.MONGO || 'mongodb://localhost/auth_app';
 const sessionSecret = process.env.SESSION_SECRET || 'believe in yourself';
@@ -18,6 +20,7 @@ mongoose.connect(dburi, {
 });
 
 var app = express();
+
 app.use(express.static('public'));
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,6 +36,8 @@ app.use(
 	})
 );
 
+app.use(flash());
+
 app.use((req, res, next) => {
 	res.set('Cache-Control', 'no-store');
 	next();
@@ -46,6 +51,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
 const isAuth = (req, res, next) => {
     if(req.isAuthenticated()){
 		res.redirect('/secret')
@@ -55,21 +61,29 @@ const isAuth = (req, res, next) => {
 
 };
 
+const protect = (req,res,next)=>{
+	if(req.isAuthenticated()){
+		next()
+	}else{
+		res.redirect("/login");
+	}
+};
+
 //================================================
 // ROUTES
 //================================================
 
-app.get('/', (req, res) => {
+app.get('/',isAuth, (req, res) => {
 	res.render('home');
 });
 
-app.get('/secret', (req, res) => {
+app.get('/secret',protect,(req, res) => {
 	res.render('secret');
 });
 
 // Auth Routes
 //show sign up form
-app.get('/register', (req, res) => {
+app.get('/register',isAuth, (req, res) => {
 	res.render('register');
 });
 //handling user sign up
@@ -91,19 +105,30 @@ app.post('/register', (req, res) => {
 
 //LOGIN ROUTES
 //render login form
-app.get('/login',isAuth, (req, res) => {
-	res.render('login');
+
+
+app.get("/login", isAuth,(req, res)=>{
+    console.log(req.session)
+    res.render("login" , {messages : req.flash("error"),username:req.body.username,password:req.body.password} );
 });
+
 //login logic
 //middleware
-app.post(
-	'/login',
-	passport.authenticate('local', {
+
+
+app.post('/login',passport.authenticate('local', {
 		successRedirect: '/secret',
-		failureRedirect: '/login'
+		failureRedirect: '/login',
+		failureFlash:true,
+		
+
+		
+	
 	}),
 	(req, res) => {}
 );
+
+
 
 app.get('/logout', function(req, res) {
 	req.logout();
