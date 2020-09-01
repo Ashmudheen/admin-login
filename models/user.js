@@ -1,9 +1,10 @@
 var mongoose = require("mongoose");
 var passportLocalMongoose = require("passport-local-mongoose");
+const number = require("mongoose/lib/cast/number");
 
 
 var UserSchema = new mongoose.Schema({
-    id: {type:Number,unique:true},
+    id: String,
     username : String,
     password : String,
     email : String

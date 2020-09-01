@@ -30,6 +30,7 @@
                         
                         <th scope="col">User Name</th>
                         <th scope="col">Email</th>
+                        <th scope="col">Password</th>
                         
                         <th scope="col" style="padding-left: 3em;">Action</th>
                     </tr>
@@ -43,10 +44,11 @@
                       
                       <td>  <%= user[i].username%> </td> 
                         <td>  <%= user[i].email %></td>
+                        <td>  <%= user[i].Password %></td>
                       
                         <td>
                             <form method="POST" action="/adminedit" style="display: inline;">
-                                    <input type="hidden" name="id"    value=  "<%= user[i].id %>"    >  
+                                    <input type="hidden" name="username"    value=  "<%= user[i].username%>"    >  
                                 <button type="submit" class="btn btn-info">Edit</button>
                             </form>
                             <form method="POST" action="/deleteuser" style="display: inline;">
