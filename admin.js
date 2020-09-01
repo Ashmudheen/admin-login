@@ -68,8 +68,8 @@ router.get('/adminedit', (req, res) => {
 });
 
 router.post('/adminedit', (req, res) => {
-	let email = req.body.email;
-	User.findOne({ email: email }).lean().exec((err, data) => {
+	let id = req.body.id;
+	User.findOne({ id: id }).lean().exec((err, data) => {
 		if (data) {
 			res.render('adminedit', { data: data });
 		} else {
@@ -79,8 +79,8 @@ router.post('/adminedit', (req, res) => {
 });
 
 router.post('/editsave', (req, res) => {
-	const { username, email } = req.body;
-	user.updateOne({ email: email }, { $set: { username: username, email: email } }, (err) => {
+	const { id,username, email } = req.body;
+	user.updateOne({ id: id }, { $set: { username: username, email: email } }, (err) => {
 		if (err) {
 			throw err;
 		} else {

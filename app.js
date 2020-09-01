@@ -31,7 +31,7 @@ app.use(
 
 		saveUninitialized: false,
 		cookie: {
-			httpOnly: false
+			maxAge:1000*60*60*24
 		}
 	})
 );
@@ -97,9 +97,9 @@ app.post('/register', (req, res) => {
 			console.log(err);
 			return res.render('register');
 		}
-		passport.authenticate('local')(req, res, () => {
+		
 			res.redirect('/login');
-		});
+		
 	});
 });
 

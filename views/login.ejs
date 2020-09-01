@@ -3,8 +3,10 @@
         <div id="login">
         <div class="form">
         <h1>Login</h1>
+        <div style="background-color:#fff3cd; border-color: #ffeeba; color: #856404;" role="alert">
 
         <p><%=  messages %></p>
+         </div>
         <form method="post" action="/login">
             <input type="text" name="username" placeholder="Username" required="required" value="<%=username%>" />
             <input type="password" name="password" placeholder="Password" required="required" value="<%=password%>" />
